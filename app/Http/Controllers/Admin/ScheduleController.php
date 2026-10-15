@@ -22,9 +22,10 @@ class ScheduleController extends Controller
             ->with(['schoolClass', 'teacher.user', 'subject'])
             ->when($request->filled('class_id'), fn ($query) => $query->where('class_id', $request->integer('class_id')))
             ->when($request->filled('teacher_id'), fn ($query) => $query->where('teacher_id', $request->integer('teacher_id')))
+            ->when($request->filled('subject_id'), fn ($query) => $query->where('subject_id', $request->integer('subject_id')))
             ->when($request->filled('day'), fn ($query) => $query->where('day_of_week', $request->string('day')->toString()))
             ->when($request->filled('status'), fn ($query) => $query->where('is_active', $request->string('status')->toString() === 'active'))
-            ->orderByRaw("FIELD(day_of_week, 'monday','tuesday','wednesday','thursday','friday','saturday')")
+            ->orderByDay()
             ->orderBy('start_time')
             ->paginate(15)
             ->withQueryString();
@@ -32,7 +33,7 @@ class ScheduleController extends Controller
         return view('admin.schedules.index', [
             'schedules' => $schedules,
             'options' => $this->formOptions(),
-            'filters' => $request->only(['class_id', 'teacher_id', 'day', 'status']),
+            'filters' => $request->only(['class_id', 'teacher_id', 'subject_id', 'day', 'status']),
         ]);
     }
 

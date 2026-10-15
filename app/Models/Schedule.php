@@ -74,6 +74,19 @@ class Schedule extends Model
         return substr($this->start_time, 0, 5).' – '.substr($this->end_time, 0, 5);
     }
 
+    /**
+     * Urutkan berdasarkan hari sekolah (Senin–Sabtu).
+     * Memakai CASE agar portabel di MySQL maupun SQLite.
+     */
+    public function scopeOrderByDay(Builder $query): Builder
+    {
+        $cases = collect(self::DAY_ORDER)
+            ->map(fn (string $day, int $index) => "WHEN '{$day}' THEN {$index}")
+            ->implode(' ');
+
+        return $query->orderByRaw("CASE day_of_week {$cases} ELSE 99 END");
+    }
+
     /* ---------------- Scope ---------------- */
 
     public function scopeActive(Builder $query): Builder

@@ -62,6 +62,7 @@ const names = [
     'user-circle',
     'user-group',
     'users',
+    'x-circle',
     'x-mark',
 ];
 
