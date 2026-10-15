@@ -190,6 +190,62 @@ Alpine.data('toastItem', (delay = 5000) => ({
 }));
 
 /* ------------------------------------------------------------------
+ | Form absensi massal (guru).
+ | statuses: { [studentId]: 'hadir' | 'izin' | 'sakit' | 'alpa' }
+ ------------------------------------------------------------------ */
+Alpine.data('attendanceForm', (initial = {}, studentIds = []) => ({
+    statuses: { ...initial },
+    studentIds: studentIds,
+    showNotes: false,
+
+    get counts() {
+        const counts = { hadir: 0, izin: 0, sakit: 0, alpa: 0 };
+
+        this.studentIds.forEach((id) => {
+            const status = this.statuses[id];
+
+            if (status && Object.prototype.hasOwnProperty.call(counts, status)) {
+                counts[status] += 1;
+            }
+        });
+
+        return counts;
+    },
+
+    get filled() {
+        return this.studentIds.filter((id) => Boolean(this.statuses[id])).length;
+    },
+
+    get total() {
+        return this.studentIds.length;
+    },
+
+    get unfilled() {
+        return this.total - this.filled;
+    },
+
+    get complete() {
+        return this.total > 0 && this.unfilled === 0;
+    },
+
+    /** Set semua siswa ke satu status (tombol isi cepat). */
+    setAll(status) {
+        const next = { ...this.statuses };
+
+        this.studentIds.forEach((id) => {
+            next[id] = status;
+        });
+
+        this.statuses = next;
+    },
+
+    /** Kosongkan semua pilihan. */
+    resetAll() {
+        this.statuses = {};
+    },
+}));
+
+/* ------------------------------------------------------------------
  | Chart.js defaults agar konsisten dengan design system.
  ------------------------------------------------------------------ */
 Chart.defaults.font.family = "'Inter Variable', Inter, ui-sans-serif, system-ui, sans-serif";

@@ -18,7 +18,7 @@ class ScheduleController extends Controller
                 ->with(['subject', 'teacher.user'])
                 ->forClass($student->class_id)
                 ->active()
-                ->orderByRaw("FIELD(day_of_week, 'monday','tuesday','wednesday','thursday','friday','saturday')")
+                ->orderByDay()
                 ->orderBy('start_time')
                 ->get()
                 ->groupBy('day_of_week')

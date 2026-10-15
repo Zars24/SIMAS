@@ -52,7 +52,7 @@ class DashboardController extends Controller
         }
 
         $recentAttendances = $student->attendances()
-            ->with(['session.schedule.subject', 'session.schedule.teacher.user'])
+            ->with(['session.schedule.schoolClass', 'session.schedule.subject', 'session.schedule.teacher.user'])
             ->join('attendance_sessions', 'attendance_sessions.id', '=', 'attendances.attendance_session_id')
             ->orderByDesc('attendance_sessions.session_date')
             ->orderByDesc('attendances.id')

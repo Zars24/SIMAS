@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Guru;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Guru\StoreAttendanceRequest;
 use App\Http\Requests\Guru\UpdateAttendanceRequest;
+use App\Models\Attendance;
 use App\Models\AttendanceSession;
 use App\Models\Schedule;
 use App\Models\Student;
@@ -149,6 +150,7 @@ class AttendanceController extends Controller
 
             $rows = collect($data['attendances'])
                 ->map(fn (array $item, $studentId) => [
+                    'attendance_session_id' => $session->id,
                     'student_id' => (int) $studentId,
                     'status' => $item['status'],
                     'note' => $item['note'] ?? null,
@@ -160,7 +162,7 @@ class AttendanceController extends Controller
                 ->values()
                 ->all();
 
-            $session->attendances()->insert($rows);
+            Attendance::query()->insert($rows);
 
             return $session;
         });

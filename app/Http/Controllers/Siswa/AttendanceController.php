@@ -47,7 +47,7 @@ class AttendanceController extends Controller
         // Semua query dibatasi ke siswa yang sedang login (bukan dari parameter URL).
         $attendances = Attendance::query()
             ->forStudent($student->id)
-            ->with(['session.schedule.subject', 'session.schedule.teacher.user'])
+            ->with(['session.schedule.schoolClass', 'session.schedule.subject', 'session.schedule.teacher.user'])
             ->when($monthStart, fn (Builder $query) => $query->whereHas(
                 'session',
                 fn (Builder $sessionQuery) => $sessionQuery->whereBetween('session_date', [$monthStart->toDateString(), $monthEnd->toDateString()])
