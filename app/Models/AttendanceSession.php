@@ -21,7 +21,8 @@ class AttendanceSession extends Model
     ];
 
     protected $casts = [
-        'session_date' => 'date',
+        // Format tanggal eksplisit agar konsisten di MySQL maupun SQLite.
+        'session_date' => 'date:Y-m-d',
         'submitted_at' => 'datetime',
     ];
 

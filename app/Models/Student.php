@@ -22,7 +22,8 @@ class Student extends Model
     ];
 
     protected $casts = [
-        'birth_date' => 'date',
+        // Format tanggal eksplisit agar konsisten di MySQL maupun SQLite.
+        'birth_date' => 'date:Y-m-d',
     ];
 
     /* ---------------- Relasi ---------------- */
