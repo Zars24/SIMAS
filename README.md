@@ -17,15 +17,16 @@ diambil dari query database (bukan angka statis).
 ## Daftar Isi
 
 1. [Fitur Utama](#fitur-utama)
-2. [Peran Pengguna](#peran-pengguna)
-3. [Persyaratan Sistem](#persyaratan-sistem)
-4. [Instalasi dari Awal](#instalasi-dari-awal)
-5. [Akun Demo](#akun-demo)
-6. [Aturan Bisnis Penting](#aturan-bisnis-penting)
-7. [Menjalankan Test](#menjalankan-test)
-8. [Struktur Proyek](#struktur-proyek)
-9. [Troubleshooting](#troubleshooting)
-10. [Keamanan & Privasi](#keamanan--privasi)
+2. [Tangkapan Layar](#tangkapan-layar)
+3. [Peran Pengguna](#peran-pengguna)
+4. [Persyaratan Sistem](#persyaratan-sistem)
+5. [Instalasi dari Awal](#instalasi-dari-awal)
+6. [Akun Demo](#akun-demo)
+7. [Aturan Bisnis Penting](#aturan-bisnis-penting)
+8. [Menjalankan Test](#menjalankan-test)
+9. [Struktur Proyek](#struktur-proyek)
+10. [Troubleshooting](#troubleshooting)
+11. [Keamanan & Privasi](#keamanan--privasi)
 
 ---
 
@@ -77,6 +78,59 @@ diambil dari query database (bukan angka statis).
   dialog konfirmasi hapus.
 - Aksesibilitas: navigasi keyboard, `aria-*`, `focus-visible`, dan dukungan
   `prefers-reduced-motion`.
+
+---
+
+## Tangkapan Layar
+
+Seluruh tangkapan layar tersimpan di [`docs/screenshots/`](docs/screenshots) dan
+dapat dibuat ulang dengan `node scripts/capture-screenshots.cjs`.
+
+Skrip tersebut memerlukan Google Chrome/Edge yang sudah terpasang dan satu paket
+opsional (tidak masuk `package.json` agar instalasi utama tetap ringan):
+
+```bash
+npm install --no-save puppeteer-core
+php artisan serve        # di terminal lain
+node scripts/capture-screenshots.cjs
+```
+
+Setel `CHROME_PATH` bila browser berada di lokasi berbeda, dan `SIMAS_URL` bila
+aplikasi berjalan pada alamat lain.
+
+### Halaman publik
+
+| Landing | Login |
+| --- | --- |
+| ![Landing](docs/screenshots/01-landing-desktop.png) | ![Login](docs/screenshots/03-login-desktop.png) |
+
+### Panel admin
+
+| Dashboard | Rekap absensi |
+| --- | --- |
+| ![Dashboard admin](docs/screenshots/05-admin-dashboard.png) | ![Rekap absensi](docs/screenshots/09-admin-rekap-absensi.png) |
+
+| Data siswa | Jadwal pelajaran |
+| --- | --- |
+| ![Data siswa](docs/screenshots/07-admin-siswa.png) | ![Jadwal](docs/screenshots/08-admin-jadwal.png) |
+
+### Portal guru
+
+| Dashboard | Form absensi massal |
+| --- | --- |
+| ![Dashboard guru](docs/screenshots/12-guru-dashboard.png) | ![Form absensi](docs/screenshots/14-guru-form-absensi.png) |
+
+### Portal siswa
+
+| Dashboard | Riwayat absensi |
+| --- | --- |
+| ![Dashboard siswa](docs/screenshots/16-siswa-dashboard.png) | ![Riwayat siswa](docs/screenshots/17-siswa-riwayat.png) |
+
+### Mode gelap & tampilan ponsel
+
+| Dashboard (gelap) | Form absensi (ponsel) |
+| --- | --- |
+| ![Dashboard gelap](docs/screenshots/11-admin-dashboard-dark.png) | ![Form absensi ponsel](docs/screenshots/15-guru-form-absensi-mobile.png) |
 
 ---
 
@@ -236,7 +290,7 @@ php artisan test
 Test berjalan pada **SQLite in-memory** (lihat `phpunit.xml`), sehingga
 **tidak menyentuh database MySQL** milik pengembangan.
 
-Cakupan pengujian (±55 test):
+Cakupan pengujian (60 test):
 
 | Berkas | Fokus |
 | --- | --- |
@@ -246,6 +300,7 @@ Cakupan pengujian (±55 test):
 | `tests/Feature/Admin/ReportTest.php` | Dashboard, filter rekap, ekspor CSV, audit log, statistik & tren |
 | `tests/Feature/Guru/AttendanceTest.php` | Isi absensi, kepemilikan jadwal, wajib semua status, anti-duplikasi, jendela koreksi |
 | `tests/Feature/Siswa/StudentPortalTest.php` | Isolasi data siswa, filter riwayat, ringkasan & persentase |
+| `tests/Feature/Performance/QueryCountTest.php` | Deteksi N+1 pada dashboard, rekap, detail sesi, dan riwayat siswa |
 
 Untuk menjalankan sebagian test:
 
@@ -288,7 +343,18 @@ resources/
     └── vendor/pagination/
 
 docs/
-└── SIMAS_Blueprint_PRD_ERD_SRS.md   # Blueprint produk, ERD, dan SRS
+├── README.md                        # Indeks dokumentasi
+├── SIMAS_Blueprint_PRD_ERD_SRS.md   # Blueprint produk, ERD, dan SRS
+├── IMPLEMENTATION-STATUS.md         # Status per tahap & keputusan teknis
+└── screenshots/                     # Tangkapan layar portofolio
+
+scripts/
+├── generate-icons.cjs               # Generator ikon Heroicons → app/Support/Icons.php
+└── capture-screenshots.cjs          # Generator tangkapan layar (butuh puppeteer-core)
+
+tests/Feature/
+├── Auth/ Admin/ Guru/ Siswa/        # Test fungsional & keamanan
+└── Performance/                     # Deteksi N+1
 ```
 
 ---
