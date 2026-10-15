@@ -9,7 +9,7 @@
             hasil
         </p>
 
-        <div class="flex items-center gap-1">
+        <div class="flex flex-wrap items-center justify-center gap-1 sm:justify-end">
             {{-- Sebelumnya --}}
             @if ($paginator->onFirstPage())
                 <span class="inline-flex h-9 w-9 cursor-not-allowed items-center justify-center rounded-xl text-slate-300 dark:text-slate-600" aria-disabled="true">

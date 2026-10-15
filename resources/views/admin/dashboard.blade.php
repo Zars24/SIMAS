@@ -1,7 +1,7 @@
 <x-layouts.app :title="'Dashboard Admin'">
     @push('scripts')
         <script>
-            (function () {
+            window.SIMAS_onReady(function () {
                 var palette = window.SIMAS_PALETTE;
                 var trend = @json($trend);
 
@@ -81,7 +81,7 @@
                         },
                     });
                 }
-            })();
+            });
         </script>
     @endpush
 

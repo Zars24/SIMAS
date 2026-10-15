@@ -256,6 +256,13 @@ Chart.defaults.plugins.legend.labels.boxWidth = 8;
 Chart.defaults.plugins.tooltip.padding = 10;
 Chart.defaults.plugins.tooltip.cornerRadius = 10;
 
+// Hormati preferensi pengurangan gerak pengguna: tampilkan grafik secara instan.
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    Chart.defaults.animation = false;
+    Chart.defaults.animations = false;
+    Chart.defaults.transitions.active.animation.duration = 0;
+}
+
 /* ------------------------------------------------------------------
  | Reveal on scroll untuk elemen .reveal.
  ------------------------------------------------------------------ */
@@ -290,7 +297,40 @@ document.addEventListener('DOMContentLoaded', initReveal);
 document.addEventListener('alpine:initialized', initReveal);
 
 /* ------------------------------------------------------------------
+ | Sinyal kesiapan runtime frontend.
+ |
+ | app.js dimuat sebagai modul ES (deferred), sehingga skrip inline di
+ | dalam Blade berjalan LEBIH DULU. Skrip tersebut mendaftarkan callback
+ | lewat window.SIMAS_onReady(...) yang disimpan di antrean, lalu
+ | dieksekusi setelah Chart.js & Alpine siap.
+ ------------------------------------------------------------------ */
+window.SIMAS_READY = false;
+window.SIMAS_READY_QUEUE = window.SIMAS_READY_QUEUE || [];
+
+window.SIMAS_onReady = (callback) => {
+    if (window.SIMAS_READY) {
+        callback();
+        return;
+    }
+
+    window.SIMAS_READY_QUEUE.push(callback);
+};
+
+/* ------------------------------------------------------------------
  | Inisialisasi tema + Alpine.
  ------------------------------------------------------------------ */
 window.Alpine.store('theme').init();
 window.Alpine.start();
+
+// Jalankan semua callback yang menunggu runtime siap.
+window.SIMAS_READY = true;
+
+window.SIMAS_READY_QUEUE.splice(0).forEach((callback) => {
+    try {
+        callback();
+    } catch (error) {
+        console.error('Callback SIMAS_onReady gagal dijalankan:', error);
+    }
+});
+
+window.dispatchEvent(new Event('simas:ready'));

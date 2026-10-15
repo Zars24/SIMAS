@@ -109,6 +109,18 @@
                 if (theme === 'dark') document.documentElement.classList.add('dark');
             } catch (e) {}
         })();
+
+        // Antrean callback: skrip inline di halaman berjalan sebelum modul app.js dimuat.
+        window.SIMAS_READY = false;
+        window.SIMAS_READY_QUEUE = window.SIMAS_READY_QUEUE || [];
+        window.SIMAS_onReady = window.SIMAS_onReady || function (callback) {
+            if (window.SIMAS_READY) {
+                callback();
+                return;
+            }
+
+            window.SIMAS_READY_QUEUE.push(callback);
+        };
     </script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -187,7 +199,8 @@
         </aside>
 
         {{-- Konten --}}
-        <div class="flex min-h-full flex-col transition-all duration-200 ease-out-soft"
+        <div x-data
+             class="flex min-h-full flex-col transition-all duration-200 ease-out-soft"
              :class="$store.sidebar.collapsed ? 'lg:pl-20' : 'lg:pl-72'">
             {{-- Header --}}
             <header class="sticky top-0 z-20 border-b border-primary-900/[0.08] bg-cream/85 backdrop-blur dark:border-white/10 dark:bg-primary-950/85">

@@ -87,8 +87,10 @@
     }
 
     /* ---------- Kartu ---------- */
+    /* min-w-0 penting agar kartu dapat menyusut di dalam grid/flex (mis. saat
+       berisi tabel yang dapat digulir horizontal pada layar kecil). */
     .card {
-        @apply rounded-2xl border border-primary-900/[0.08] bg-white shadow-card dark:border-white/10 dark:bg-primary-900/40;
+        @apply min-w-0 rounded-2xl border border-primary-900/[0.08] bg-white shadow-card dark:border-white/10 dark:bg-primary-900/40;
     }
 
     .card-pad {
@@ -227,7 +229,7 @@
 
     /* ---------- Tabel ---------- */
     .table-wrap {
-        @apply overflow-x-auto rounded-2xl border border-primary-900/[0.08] bg-white shadow-card dark:border-white/10 dark:bg-primary-900/40;
+        @apply min-w-0 overflow-x-auto rounded-2xl border border-primary-900/[0.08] bg-white shadow-card dark:border-white/10 dark:bg-primary-900/40;
     }
 
     .table-simas {
