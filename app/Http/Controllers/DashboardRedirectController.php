@@ -1,0 +1,17 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+
+class DashboardRedirectController extends Controller
+{
+    /**
+     * Arahkan user ke dashboard sesuai role-nya.
+     */
+    public function __invoke(Request $request): RedirectResponse
+    {
+        return redirect()->route($request->user()->dashboardRouteName());
+    }
+}

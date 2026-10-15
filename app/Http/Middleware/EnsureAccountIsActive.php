@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
+
+class EnsureAccountIsActive
+{
+    /**
+     * Jika akun dinonaktifkan saat sesi masih berjalan, paksa logout.
+     */
+    public function handle(Request $request, Closure $next): Response
+    {
+        $user = $request->user();
+
+        if ($user && ! $user->is_active) {
+            Auth::guard('web')->logout();
+
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return redirect()
+                ->route('login')
+                ->withErrors(['login' => 'Akun Anda telah dinonaktifkan. Hubungi administrator sekolah.']);
+        }
+
+        return $next($request);
+    }
+}
