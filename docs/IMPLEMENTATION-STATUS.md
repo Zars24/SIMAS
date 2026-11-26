@@ -51,8 +51,10 @@ status pelaksanaan dan keputusan teknis aktual.
 ### Tahap 0 — Audit
 
 - Lingkungan diverifikasi: PHP 8.1.10, Composer, Node 20, Git, MySQL/MariaDB.
-- Struktur proyek dipetakan; tidak ada kode lama yang perlu dipertahankan
-  (repositori masih kosong), sehingga tidak ada risiko kehilangan data.
+- Struktur proyek dipetakan. **Saat audit awal (Tahap 0) repositori masih
+  kosong**, sehingga tidak ada kode lama yang perlu dipertahankan dan tidak ada
+  risiko kehilangan data. Kondisi itu hanya berlaku pada tahap audit tersebut —
+  repositori sekarang berisi implementasi penuh yang dijelaskan di dokumen ini.
 - ERD rancangan diselaraskan dengan migrasi aktual (lihat bagian 3).
 
 ### Tahap 1 — Fondasi & design system

@@ -1,8 +1,8 @@
 {
     "name": "laravel/laravel",
     "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "description": "SIMAS — Sistem Informasi Manajemen Absensi Siswa: aplikasi absensi sekolah berbasis Laravel dengan panel admin, portal guru, dan portal siswa.",
+    "keywords": ["simas", "absensi", "absensi-sekolah", "manajemen-sekolah", "laravel", "blade", "tailwindcss", "alpinejs"],
     "license": "MIT",
     "require": {
         "php": "^8.1",

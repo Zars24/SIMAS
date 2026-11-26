@@ -353,7 +353,6 @@ resources/
     └── vendor/pagination/
 
 docs/
-├── README.md                        # Indeks dokumentasi
 ├── SIMAS_Blueprint_PRD_ERD_SRS.md   # Blueprint produk, ERD, dan SRS
 ├── IMPLEMENTATION-STATUS.md         # Status per tahap & keputusan teknis
 └── screenshots/                     # Tangkapan layar portofolio
