@@ -70,9 +70,15 @@ diambil dari query database (bukan angka statis).
   yang dapat dipakai untuk membuka data siswa lain.
 
 ### UI/UX
-- Design system konsisten (palet hijau sage + aksen gold) dengan komponen
+- Design system konsisten (palet hijau hutan + aksen gold) dengan komponen
   Blade yang dapat digunakan ulang.
-- **Mode gelap** yang tersimpan di `localStorage`.
+- Landing page bergaya editorial: tipografi serif Newsreader untuk judul,
+  Inter untuk teks isi, dan pratinjau lembar absensi sebagai pengganti mockup
+  dashboard.
+- **Mode gelap** yang tersimpan di `localStorage`, dengan token warna terpisah
+  untuk terang dan gelap (bukan hasil inversi).
+- Landing page memakai **Lenis** untuk smooth scroll, dinonaktifkan otomatis
+  bila pengguna mengaktifkan `prefers-reduced-motion`.
 - Responsif (desktop, tablet, ponsel) dengan sidebar/drawer.
 - Halaman error kustom (403, 404, 419, 500), empty state, toast, dan
   dialog konfirmasi hapus.
@@ -100,9 +106,13 @@ aplikasi berjalan pada alamat lain.
 
 ### Halaman publik
 
-| Landing | Login |
+| Landing (terang) | Landing (gelap) |
 | --- | --- |
-| ![Landing](docs/screenshots/01-landing-desktop.png) | ![Login](docs/screenshots/03-login-desktop.png) |
+| ![Landing](docs/screenshots/01-landing-desktop.png) | ![Landing mode gelap](docs/screenshots/04-landing-dark.png) |
+
+| Login | Landing (ponsel) |
+| --- | --- |
+| ![Login](docs/screenshots/03-login-desktop.png) | ![Landing ponsel](docs/screenshots/02-landing-mobile.png) |
 
 ### Panel admin
 
